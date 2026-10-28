@@ -26,6 +26,7 @@ jobs:
           flutter create --platforms=android --org com.plasco app
           cp -r source/lib app/
           cp source/pubspec.yaml app/pubspec.yaml
+          cat app/lib/main.dart
           sed -i "1i import 'dart:ui' as ui;" app/lib/main.dart
           sed -i 's/TextDirection\.rtl/ui.TextDirection.rtl/g' app/lib/main.dart
 

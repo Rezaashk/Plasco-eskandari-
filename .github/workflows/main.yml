@@ -1,0 +1,40 @@
+name: Build Plasco Eskandari APK
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "plasco_eskandari_flutter_source.zip"
+      - ".github/workflows/main.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: دریافت فایل‌های مخزن
+        uses: actions/checkout@v4
+
+      - name: نصب Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: آماده‌سازی پروژه
+        run: |
+          unzip plasco_eskandari_flutter_source.zip -d source
+          flutter create --platforms=android --org com.plasco app
+          cp -r source/lib app/
+          cp source/pubspec.yaml app/pubspec.yaml
+
+      - name: ساخت APK
+        working-directory: app
+        run: |
+          flutter pub get
+          flutter build apk --release
+
+      - name: ذخیره فایل APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: plasco-eskandari-apk
+          path: app/build/app/outputs/flutter-apk/app-release.apk

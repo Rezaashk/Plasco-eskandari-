@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "150841216160",
+    "project_id": "plasco-eskandari-69ecb",
+    "storage_bucket": "plasco-eskandari-69ecb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150841216160:android:3d3c69f99cae37c439cdc5",
+        "android_client_info": {
+          "package_name": "com.plasco.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmpOMOf_W1e_BleQVtVn-yyoYtqJdlxyw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

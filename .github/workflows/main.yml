@@ -1,3 +1,4 @@
+
 name: Build Plasco Eskandari APK
 
 on:
@@ -6,6 +7,7 @@ on:
     paths:
       - "plasco_eskandari_flutter_source.zip"
       - ".github/workflows/main.yml"
+      - "google-services.json"
 
 jobs:
   build:
@@ -26,7 +28,39 @@ jobs:
           flutter create --platforms=android --org com.plasco app
           cp -r source/lib app/
           cp source/pubspec.yaml app/pubspec.yaml
-          cat app/lib/main.dart
+
+          mkdir -p app/android/app
+          cp google-services.json app/android/app/google-services.json
+
+          python3 - <<'PY'
+          from pathlib import Path
+
+          settings = Path("app/android/settings.gradle.kts")
+          app_gradle = Path("app/android/app/build.gradle.kts")
+
+          s = settings.read_text()
+          marker = 'plugins {'
+          if marker not in s:
+              raise SystemExit("Could not find plugins block in settings.gradle.kts")
+          s = s.replace(
+              marker,
+              marker + '\n    id("com.google.gms.google-services") version "4.4.2" apply false',
+              1
+          )
+          settings.write_text(s)
+
+          s = app_gradle.read_text()
+          marker = 'plugins {'
+          if marker not in s:
+              raise SystemExit("Could not find plugins block in app/build.gradle.kts")
+          s = s.replace(
+              marker,
+              marker + '\n    id("com.google.gms.google-services")',
+              1
+          )
+          app_gradle.write_text(s)
+          PY
+
           sed -i "1i import 'dart:ui' as ui;" app/lib/main.dart
           sed -i 's/TextDirection\.rtl/ui.TextDirection.rtl/g' app/lib/main.dart
 

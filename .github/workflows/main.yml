@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - "plasco_eskandari_flutter_source.zip"
+      - "PlascoSource.zip"
       - ".github/workflows/main.yml"
       - "google-services.json"
 
@@ -24,7 +24,7 @@ jobs:
 
       - name: آماده‌سازی پروژه
         run: |
-          unzip plasco_eskandari_flutter_source.zip -d source
+          unzip PlascoSource.zip -d source
           flutter create --platforms=android --org com.plasco app
           cp -r source/lib app/
           cp source/pubspec.yaml app/pubspec.yaml

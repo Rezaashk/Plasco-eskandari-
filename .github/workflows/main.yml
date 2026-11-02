@@ -63,6 +63,7 @@ jobs:
 
           sed -i "1i import 'dart:ui' as ui;" app/lib/main.dart
           sed -i 's/TextDirection\.rtl/ui.TextDirection.rtl/g' app/lib/main.dart
+          sed -i 's/ui\.ui\.TextDirection/ui.TextDirection/g' app/lib/main.dart
 
       - name: ساخت APK
         working-directory: app
